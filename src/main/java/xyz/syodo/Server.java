@@ -109,7 +109,7 @@ public class Server {
 
     public boolean start() {
         if(future == null) {
-            Logger.success("Starting CloudConnect Instance on port " + bindAddress.getPort());
+            Logger.success("Starting Barebone Instance on port " + bindAddress.getPort());
             future = (RakServerChannel) serverBootstrap.bind(bindAddress).syncUninterruptibly().channel();
             return true;
         } else return false;
