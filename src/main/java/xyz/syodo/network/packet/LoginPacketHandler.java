@@ -39,6 +39,9 @@ public class LoginPacketHandler extends PacketHandler<LoginPacket>{
         ResourcePacksInfoPacket resourcePacksInfo = new ResourcePacksInfoPacket();
         resourcePacksInfo.setForcedToAccept(false);
         resourcePacksInfo.setScriptingEnabled(false);
+        resourcePacksInfo.setHasAddonPacks(false);
+        resourcePacksInfo.setWorldTemplateVersion("");
+        resourcePacksInfo.setWorldTemplateId(UUID.randomUUID());
         HANDLER.getPlayer().sendPacket(resourcePacksInfo);
 
         return PacketSignal.HANDLED;
