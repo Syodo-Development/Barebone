@@ -19,12 +19,13 @@ import java.util.Optional;
 
 public class PacketHandlerPipe implements BedrockPacketHandler {
 
-    private List<PacketHandler> handlers = new ArrayList<>();
+    @Getter
+    private final List<PacketHandler> handlers = new ArrayList<>();
     @Getter
     private final Player player;
 
     public PacketHandlerPipe(BedrockSession session) {
-        this.player = new Player(session);
+        this.player = new Player(session, this);
         Arrays.stream(PacketHandlerRegistery.get().getPacketHandlers()).forEach(this::addPacketHandler);
     }
 
