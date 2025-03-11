@@ -1,21 +1,10 @@
 package xyz.syodo.network.packet;
 
-import org.cloudburstmc.math.vector.Vector2f;
 import org.cloudburstmc.math.vector.Vector3f;
-import org.cloudburstmc.math.vector.Vector3i;
-import org.cloudburstmc.nbt.NbtMap;
-import org.cloudburstmc.nbt.NbtUtils;
-import org.cloudburstmc.protocol.bedrock.data.*;
 import org.cloudburstmc.protocol.bedrock.packet.*;
 import org.cloudburstmc.protocol.common.PacketSignal;
-import org.cloudburstmc.protocol.common.util.OptionalBoolean;
 
 import xyz.syodo.network.PacketHandlerPipe;
-import xyz.syodo.utils.Logger;
-import xyz.syodo.utils.PaletteManager;
-
-import java.io.IOException;
-import java.util.Objects;
 import java.util.UUID;
 
 public class LoginPacketHandler extends PacketHandler<LoginPacket>{

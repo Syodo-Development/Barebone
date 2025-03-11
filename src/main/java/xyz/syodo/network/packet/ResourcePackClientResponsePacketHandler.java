@@ -8,14 +8,11 @@ import org.cloudburstmc.nbt.NBTOutputStream;
 import org.cloudburstmc.nbt.NbtMap;
 import org.cloudburstmc.nbt.NbtUtils;
 import org.cloudburstmc.protocol.bedrock.data.*;
-import org.cloudburstmc.protocol.bedrock.data.inventory.ItemData;
 import org.cloudburstmc.protocol.bedrock.packet.*;
 import org.cloudburstmc.protocol.common.PacketSignal;
 import org.cloudburstmc.protocol.common.util.OptionalBoolean;
 import xyz.syodo.config.ServerConfiguration;
 import xyz.syodo.network.PacketHandlerPipe;
-import xyz.syodo.utils.PaletteManager;
-import xyz.syodo.utils.ProtocolVersion;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -110,10 +107,7 @@ public class ResourcePackClientResponsePacketHandler extends PacketHandler<Resou
                 startGamePacket.setServerEngine("");
                 startGamePacket.setPlayerPropertyData(NbtMap.EMPTY);
                 startGamePacket.setWorldTemplateId(UUID.randomUUID());
-
-                startGamePacket.setChatRestrictionLevel(ChatRestrictionLevel.NONE);
-
-                startGamePacket.setBlockPalette(PaletteManager.get().CACHED_PALLETE);
+                startGamePacket.setChatRestrictionLevel(ChatRestrictionLevel.DISABLED);
 
                 HANDLER.getPlayer().sendPacket(startGamePacket);
 
@@ -139,11 +133,9 @@ public class ResourcePackClientResponsePacketHandler extends PacketHandler<Resou
                 }
 
                 BiomeDefinitionListPacket biomeDefinitionListPacket = new BiomeDefinitionListPacket();
-                biomeDefinitionListPacket.setDefinitions(PaletteManager.get().BIOMES);
                 HANDLER.getPlayer().sendPacket(biomeDefinitionListPacket);
 
                 AvailableEntityIdentifiersPacket availableEntityIdentifiersPacket = new AvailableEntityIdentifiersPacket();
-                availableEntityIdentifiersPacket.setIdentifiers(PaletteManager.get().ENTITY_IDENTIFIERS);
                 HANDLER.getPlayer().sendPacket(availableEntityIdentifiersPacket);
 
                 PlayStatusPacket playStatusPacket = new PlayStatusPacket();
