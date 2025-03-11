@@ -28,10 +28,13 @@ import xyz.syodo.network.PacketHandlerRegistery;
 import xyz.syodo.network.packet.LoginPacketHandler;
 import xyz.syodo.network.packet.RequestNetworkSettingsPacketHandler;
 import xyz.syodo.network.packet.ResourcePackClientResponsePacketHandler;
+import xyz.syodo.plugin.PluginLoader;
 import xyz.syodo.utils.Logger;
 import xyz.syodo.utils.ProtocolVersion;
 
+import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.URISyntaxException;
 
 public class Server {
 
@@ -61,6 +64,14 @@ public class Server {
     public Server() {
 
         ServerConfiguration serverConfiguration = ServerConfiguration.get();
+
+        if(serverConfiguration.isPlugins()) {
+            try {
+                PluginLoader.get().loadAll();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
 
         this.bindAddress = new InetSocketAddress(serverConfiguration.getBindAdress(), serverConfiguration.getPort());
 

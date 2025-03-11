@@ -1,6 +1,5 @@
 package xyz.syodo.config;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.cloudburstmc.protocol.bedrock.BedrockPong;
@@ -21,6 +20,7 @@ public class ServerConfiguration implements Configuration {
     private Integer port = 19132;
 
     private Integer processorCount = 4;
+    private boolean plugins = true;
 
     private String edition = "MCPE";
     private String motd = "Barebone Bedrock Server";
