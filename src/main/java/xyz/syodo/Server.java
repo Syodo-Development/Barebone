@@ -12,6 +12,7 @@ import io.netty.channel.kqueue.KQueueEventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.DatagramChannel;
 import io.netty.channel.socket.nio.NioDatagramChannel;
+import lombok.Getter;
 import lombok.NonNull;
 import org.cloudburstmc.netty.channel.raknet.RakChannelFactory;
 import org.cloudburstmc.netty.channel.raknet.RakServerChannel;
@@ -52,7 +53,9 @@ public class Server {
     @NonNull
     private InetSocketAddress bindAddress;
     private ServerBootstrap serverBootstrap;
-    private RakServerChannel future;
+    @Getter
+    private RakServerChannel channel;
+
     private final BedrockCodec CODEC = ProtocolVersion.latest().getCodec();
 
     public Server() {
@@ -113,9 +116,9 @@ public class Server {
 
 
     public boolean start() {
-        if(future == null) {
+        if(channel == null) {
             Logger.success("Starting Barebone Instance on port " + bindAddress.getPort());
-            future = (RakServerChannel) serverBootstrap.bind(bindAddress).syncUninterruptibly().channel();
+            channel = (RakServerChannel) serverBootstrap.bind(bindAddress).syncUninterruptibly().channel();
             return true;
         } else return false;
     }

@@ -31,7 +31,7 @@ public class PacketHandlerPipe implements BedrockPacketHandler {
     private void addPacketHandler(Class packetHandlerClass) {
         try {
             Constructor<?> ctor = packetHandlerClass.getConstructor(PacketHandlerPipe.class);
-            Object object = ctor.newInstance(new Object[] { this });
+            Object object = ctor.newInstance(this);
             if(object instanceof PacketHandler<?> packetHandler){
                 handlers.add(packetHandler);
             } else throw new RuntimeException("Class is not a packethandler");
@@ -42,14 +42,10 @@ public class PacketHandlerPipe implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handlePacket(BedrockPacket packet) {
-        Logger.info("Received " + packet.getClass().getSimpleName());
-        Optional<PacketHandler> handler = handlers.stream().filter(f -> f.getType() == packet.getClass()).findFirst();
-        if(handler.isPresent()) {
-            return handler.get().handle(packet);
-        } else {
-            Logger.error("No PacketHandler for " + packet.toString());
-            return PacketSignal.UNHANDLED;
+        for(PacketHandler handler : handlers.stream().filter(f -> f.getType() == packet.getClass()).toList()) {
+            if(handler.handle(packet) == PacketSignal.UNHANDLED) return PacketSignal.UNHANDLED;
         }
+        return PacketSignal.HANDLED;
     }
 
 }

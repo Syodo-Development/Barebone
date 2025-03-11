@@ -117,8 +117,10 @@ public class ResourcePackClientResponsePacketHandler extends PacketHandler<Resou
 
                 HANDLER.getPlayer().sendPacket(startGamePacket);
 
+                ItemComponentPacket componentPacket = new ItemComponentPacket();
+                HANDLER.getPlayer().sendPacket(componentPacket);
+
                 CreativeContentPacket creativeContentPacket = new CreativeContentPacket();
-                creativeContentPacket.setContents(new ItemData[0]);
                 HANDLER.getPlayer().sendPacket(creativeContentPacket);
 
                 Vector3f pos = Vector3f.ZERO;
